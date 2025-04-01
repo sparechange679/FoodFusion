@@ -1,22 +1,18 @@
-import mysql from 'mysql';
-import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from '../config/env.js';
-import process from 'node:process';
+import { Sequelize } from "sequelize";
+import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from "../config/env.js";
 
-const connection = mysql.createConnection({
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
+  dialect: "mysql",
 });
 
-const connectToDatabase = () => {
-  connection.connect((err) => {
-    if (err) {
-      console.error('Error connecting to MySQL:', err.message);
-      process.exit(1);
-    }
-    console.log(`Connected to MySQL database on ${DB_HOST}`);
-  });
+const connectToDatabase = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Connection to MySQL has been established successfully.");
+  } catch (error) {
+    console.error("Unable to connect to MySQL:", error);
+  }
 };
 
 export default connectToDatabase;

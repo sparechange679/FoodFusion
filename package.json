@@ -18,7 +18,8 @@
     "mongoose": "^8.12.1",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.14.0"
+    "mysql2": "^3.14.0",
+    "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",

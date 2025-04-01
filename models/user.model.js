@@ -1,33 +1,52 @@
-import mongoose from "mongoose";
+import { Sequelize, DataTypes } from "sequelize";
+import { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } from "../config/env.js";
 
-const userSchema = new mongoose.Schema(
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  dialect: "mysql",
+});
+
+const User = sequelize.define(
+  "User",
   {
     name: {
-      type: String,
-      required: [true, "User Name is required"],
-      trim: true,
-      minLength: 2,
-      maxLength: 50,
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [2, 50],
+      },
     },
     email: {
-      type: String,
-      required: [true, "User Email is required"],
+      type: DataTypes.STRING,
+      allowNull: false,
       unique: true,
-      trim: true,
-      lowercase: true,
-      match: [
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
-      ],
+      validate: {
+        isEmail: true,
+      },
     },
     password: {
-      type: String,
-      required: [true, "User Password is required"],
-      minLength: 6,
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [6],
+      },
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
-const User = mongoose.model("User", userSchema);
+const init = async () => {
+  try {
+    await sequelize.sync({ alter: true }); // This updates the table without dropping it
+    console.log("User table created or updated successfully!");
+  } catch (error) {
+    console.error("Unable to create or update the table:", error);
+  }
+};
+
+init();
+
 export default User;
