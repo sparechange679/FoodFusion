@@ -5,7 +5,7 @@ import { sendMessage } from "../controllers/contact.controller.js";
 const contactsRouter = Router();
 
 contactsRouter.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/contact-form.php"));
+  res.sendFile(path.resolve("public/index.php"));
 });
 
 contactsRouter.post("/", sendMessage);
