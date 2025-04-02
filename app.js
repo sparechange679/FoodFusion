@@ -7,7 +7,7 @@ import connectToDatabase from "./database/mysql.js";
 import errorMiddleware from "./middlewares/error.middle.js";
 import cookieParser from "cookie-parser";
 
-const app = express();
+const app = express(); 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
