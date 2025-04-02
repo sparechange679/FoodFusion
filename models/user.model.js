@@ -9,7 +9,15 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 const User = sequelize.define(
   "User",
   {
-    name: {
+    firstname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [2, 50],
+      },
+    },
+    lastname: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

@@ -1,15 +1,13 @@
 import { Router } from "express";
 import path from "path";
+import { sendMessage } from "../controllers/contact.controller.js";
 
 const contactsRouter = Router();
 
 contactsRouter.get("/", (req, res) => {
-  res.sendFile(path.resolve("public/contact-form.html"));
+  res.sendFile(path.resolve("public/contact-form.php"));
 });
 
-contactsRouter.post("/", (req, res) => {
-  // Handle form submission logic here
-  res.send({ title: "CREATE new contact message" });
-});
+contactsRouter.post("/", sendMessage);
 
 export default contactsRouter;
