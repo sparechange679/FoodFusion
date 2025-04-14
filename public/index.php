@@ -1,5 +1,7 @@
 <?php
 require "./partials/header.php";
+
+$pass = "Ts56,W>+@Sp+Zp";
 ?>
 
 <!-- Category Section Start -->

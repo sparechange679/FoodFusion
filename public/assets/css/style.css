@@ -401,6 +401,10 @@ fieldset legend {
   margin-left: 1.25rem; /* 20px */
 }
 
+.mt-10 {
+  margin-top: 0.625rem; /* 10px */
+}
+
 .form input,
 .form-join input,
 .form textarea {

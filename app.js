@@ -29,9 +29,17 @@ app.use("/foodfusion/auth", authRouter);
 // Error middleware
 app.use(errorMiddleware);
 
-// Default route to load an HTML file
+// Default route to load a PHP file the homepage
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.php"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.get("/about", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "about.html"));
+});
+
+app.get("/contact", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "contact.html"));
 });
 
 app.listen(PORT, async () => {

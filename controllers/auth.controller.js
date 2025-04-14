@@ -82,8 +82,28 @@ export const signIn = async (req, res, next) => {
 
 export const signOut = async (req, res, next) => {
   try {
-    // Invalidate the token (implementation depends on your token management strategy)
-    // For example, you can add the token to a blacklist or change the user's token version
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      const error = new Error("Authorization token missing or invalid");
+      error.statusCode = 401;
+      throw error;
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decodedToken = jwt.verify(token, JWT_SECRET);
+
+    // Find the user and increment tokenVersion
+    const user = await User.findByPk(decodedToken.userId);
+    if (!user) {
+      const error = new Error("User not found");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    // Increment the tokenVersion to invalidate the current token
+    user.tokenVersion = (user.tokenVersion || 0) + 1;
+    await user.save();
 
     res.status(200).json({
       success: true,
