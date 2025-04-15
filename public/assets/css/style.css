@@ -111,6 +111,12 @@ fieldset legend {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px 30px;
 }
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px 10px;
+  margin-left: -70px;
+}
 /* CSS Style For All End */
 
 /* Navigation Section Style */
@@ -407,13 +413,18 @@ fieldset legend {
 
 .form input,
 .form-join input,
-.form textarea {
+.form textarea,
+form textarea {
   width: 98%;
   padding: 8px;
   font-size: 16px;
   border-radius: 5px;
   border: 1px solid #bfbbbb;
   margin-bottom: 25px;
+}
+form textarea {
+  height: 150px;
+  resize: none;
 }
 .form-join input[type="submit"],
 .form input[type="submit"]

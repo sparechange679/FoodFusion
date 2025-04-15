@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FoodFusion | Home</title>
+    <title>FoodFusion | Contact</title>
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -150,59 +150,13 @@
     <!-- Category Section Start -->
     <section class="categories">
       <div class="container">
-        <h2 class="text-center">Explore Foods</h2>
+        <h2 class="text-center">Community Cookbook</h2>
         <div class="heading-border"></div>
 
-        <div class="grid-3">
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img
-                src="assets/img/category/pizza.jpg"
-                class="img-responsive"
-                alt=""
-              />
-              <h3 class="float-text text-white">Pizza</h3>
-            </div>
-          </a>
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img
-                src="assets/img/category/sandwich.jpg"
-                class="img-responsive"
-                alt=""
-              />
-              <h3 class="float-text text-white">Sandwich</h3>
-            </div>
-          </a>
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img
-                src="assets/img/category/burger.jpg"
-                class="img-responsive"
-                alt=""
-              />
-              <h3 class="float-text text-white">Burger</h3>
-            </div>
-          </a>
-        </div>
+        <div id="cookbook-ingredients" class="grid-3"></div>
       </div>
     </section>
     <!-- Category Section End -->
-
-    <!-- Foods Section Start -->
-    <section class="food-menu">
-      <div class="container">
-        <h2 class="text-center">Recipe Collection</h2>
-        <div class="heading-border"></div>
-        <div class="grid-2">
-          <!-- Recipes will be dynamically appended here (max 4) -->
-        </div>
-      </div>
-      <p class="text-center">
-          <a href="/recipe" class="btn-primary">See All Foods</a>
-      </p>
-    </section>
-    <!-- Foods Section End -->
 
     <!-- Footer Section Start -->
     <section class="footer">
@@ -410,58 +364,48 @@
     </script>
     <script>
       $(document).ready(function () {
-        const recipesEndpoint = "http://localhost:8000/foodfusion/recipes";
-
-        // Fetch recipes from the API
         $.ajax({
-          url: recipesEndpoint,
-          type: "GET",
+          url: "http://localhost:8000/foodfusion/recipes",
+          method: "GET",
           success: function (response) {
-            if (response.success) {
-              const recipes = response.data.allRecipes.slice(0, 4); // Select the first 4 recipes
-              const recipesContainer = $(".grid-2");
+            if (response.success && response.data && response.data.allRecipes) {
+              // Get up to 9 recipes
+              const recipes = response.data.allRecipes.slice(0, 9);
 
-              // Clear existing content
-              recipesContainer.empty();
-
-              // Loop through the first 4 recipes and populate the page
-              recipes.forEach((recipe) => {
-                const recipeHtml = `
-                    <div class="food-menu-box">
-                      <form action="">
-                        <div class="food-menu-img">
-                          <img
-                            src="${recipe.pictureUrl}"
-                            alt="${recipe.title}"
-                            class="img-responsive img-curve"
-                          />
-                        </div>
-                        <div class="food-menu-desc">
-                          <h4>${recipe.title}</h4>
-                          <p class="food-details">
-                            ${recipe.instructions}
-                          </p>
-                          ${recipe.ingredients
-                            .split(", ")
-                            .map(
-                              (ingredient) => `<a href="#">${ingredient}</a>`
-                            )
-                            .join(" &nbsp; ")}
-                        </div>
-                      </form>
-                    </div>
+              // For each recipe, pick a random ingredient
+              const ingredientCards = recipes.map(function (recipe) {
+                // Split ingredients by comma, trim spaces
+                const ingredientsArr = recipe.ingredients
+                  .split(",")
+                  .map((i) => i.trim());
+                // Pick a random ingredient
+                const randomIngredient =
+                  ingredientsArr[
+                    Math.floor(Math.random() * ingredientsArr.length)
+                  ];
+                // Format for URL slug: lowercase, spaces to dashes
+                const slug = randomIngredient
+                  .toLowerCase()
+                  .replace(/\s+/g, "-");
+                // Build the card HTML
+                return `
+                    <a href="/cookbook/${slug}" class="ingredient-card">
+                      <div class="float-container">
+                        <img src="${recipe.pictureUrl}" class="img-responsive" alt="${randomIngredient}" />
+                        <h3 class="float-text text-white">${randomIngredient}</h3>
+                      </div>
+                    </a>
                   `;
-
-                recipesContainer.append(recipeHtml);
               });
+
+              // Render to the page
+              $("#cookbook-ingredients").html(ingredientCards.join(""));
             } else {
-              alert("Failed to load recipes. Please try again later.");
+              $("#cookbook-ingredients").html("<p>No recipes found.</p>");
             }
           },
-          error: function (xhr) {
-            alert(
-              "An error occurred while fetching the recipes. Please try again later."
-            );
+          error: function () {
+            $("#cookbook-ingredients").html("<p>Failed to load recipes.</p>");
           },
         });
       });

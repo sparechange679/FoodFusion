@@ -147,60 +147,15 @@
     </section>
     <!-- Food Search Section End -->
 
-    <!-- Category Section Start -->
-    <section class="categories">
-      <div class="container">
-        <h2 class="text-center">Explore Foods</h2>
-        <div class="heading-border"></div>
-
-        <div class="grid-3">
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img
-                src="assets/img/category/pizza.jpg"
-                class="img-responsive"
-                alt=""
-              />
-              <h3 class="float-text text-white">Pizza</h3>
-            </div>
-          </a>
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img
-                src="assets/img/category/sandwich.jpg"
-                class="img-responsive"
-                alt=""
-              />
-              <h3 class="float-text text-white">Sandwich</h3>
-            </div>
-          </a>
-          <a href="category-foods.html">
-            <div class="float-container">
-              <img
-                src="assets/img/category/burger.jpg"
-                class="img-responsive"
-                alt=""
-              />
-              <h3 class="float-text text-white">Burger</h3>
-            </div>
-          </a>
-        </div>
-      </div>
-    </section>
-    <!-- Category Section End -->
-
     <!-- Foods Section Start -->
     <section class="food-menu">
       <div class="container">
         <h2 class="text-center">Recipe Collection</h2>
         <div class="heading-border"></div>
         <div class="grid-2">
-          <!-- Recipes will be dynamically appended here (max 4) -->
+          <!-- Recipes will be dynamically appended here -->
         </div>
       </div>
-      <p class="text-center">
-          <a href="/recipe" class="btn-primary">See All Foods</a>
-      </p>
     </section>
     <!-- Foods Section End -->
 
@@ -412,45 +367,63 @@
       $(document).ready(function () {
         const recipesEndpoint = "http://localhost:8000/foodfusion/recipes";
 
+        // Function to randomly select 3 ingredients
+        function getRandomIngredients(ingredients) {
+          const ingredientsArray = ingredients.split(", ");
+          const shuffled = ingredientsArray.sort(() => 0.5 - Math.random());
+          return shuffled.slice(0, 3);
+        }
+
+        // Function to shuffle and select the first 10 recipes
+        function getRandomRecipes(recipes) {
+          const shuffledRecipes = recipes.sort(() => 0.5 - Math.random());
+          return shuffledRecipes.slice(0, 10);
+        }
+
         // Fetch recipes from the API
         $.ajax({
           url: recipesEndpoint,
           type: "GET",
           success: function (response) {
             if (response.success) {
-              const recipes = response.data.allRecipes.slice(0, 4); // Select the first 4 recipes
+              let recipes = response.data.allRecipes;
+
+              // Shuffle recipes and select the first 10
+              recipes = getRandomRecipes(recipes);
+
               const recipesContainer = $(".grid-2");
 
               // Clear existing content
               recipesContainer.empty();
 
-              // Loop through the first 4 recipes and populate the page
+              // Loop through the recipes and populate the page
               recipes.forEach((recipe) => {
+                const randomIngredients = getRandomIngredients(
+                  recipe.ingredients
+                );
+
                 const recipeHtml = `
-                    <div class="food-menu-box">
-                      <form action="">
-                        <div class="food-menu-img">
-                          <img
-                            src="${recipe.pictureUrl}"
-                            alt="${recipe.title}"
-                            class="img-responsive img-curve"
-                          />
-                        </div>
-                        <div class="food-menu-desc">
-                          <h4>${recipe.title}</h4>
-                          <p class="food-details">
-                            ${recipe.instructions}
-                          </p>
-                          ${recipe.ingredients
-                            .split(", ")
-                            .map(
-                              (ingredient) => `<a href="#">${ingredient}</a>`
-                            )
-                            .join(" &nbsp; ")}
-                        </div>
-                      </form>
-                    </div>
-                  `;
+          <div class="food-menu-box">
+            <form action="">
+              <div class="food-menu-img">
+                <img
+                  src="${recipe.pictureUrl}"
+                  alt="${recipe.title}"
+                  class="img-responsive img-curve"
+                />
+              </div>
+              <div class="food-menu-desc">
+                <h4>${recipe.title}</h4>
+                <p class="food-details">
+                  ${recipe.instructions}
+                </p>
+                ${randomIngredients
+                  .map((ingredient) => `<a href="#">${ingredient}</a>`)
+                  .join(" &nbsp; ")}
+              </div>
+            </form>
+          </div>
+        `;
 
                 recipesContainer.append(recipeHtml);
               });

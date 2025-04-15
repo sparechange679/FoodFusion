@@ -52,10 +52,10 @@ const init = async () => {
     const sampleRecipes = [
       {
         title: "Spaghetti Carbonara",
-        ingredients: "Spaghetti, Eggs, Parmesan cheese, Pancetta, Pepper",
+        ingredients: "Spaghetti, Eggs, Parmesan cheese",
         instructions:
           "1. Boil the spaghetti. 2. Cook the pancetta. 3. Mix eggs and cheese. 4. Combine all with pepper.",
-        pictureUrl: "https://example.com/spaghetti.jpg",
+        pictureUrl: "./assets/img/food/s1.jpg",
       },
       {
         title: "Chicken Curry",
@@ -63,7 +63,7 @@ const init = async () => {
           "Chicken, Onion, Garlic, Ginger, Tomatoes, Curry powder, Coconut milk",
         instructions:
           "1. Cook onions, garlic, and ginger. 2. Add chicken and curry powder. 3. Stir in tomatoes and coconut milk.",
-        pictureUrl: "https://example.com/chicken-curry.jpg",
+        pictureUrl: "./assets/img/food/b1.jpg",
       },
       {
         title: "Caesar Salad",
@@ -71,7 +71,7 @@ const init = async () => {
           "Romaine lettuce, Croutons, Parmesan cheese, Caesar dressing",
         instructions:
           "1. Chop lettuce. 2. Add croutons and cheese. 3. Toss with dressing.",
-        pictureUrl: "https://example.com/caesar-salad.jpg",
+        pictureUrl: "./assets/img/food/p1.jpg",
       },
       {
         title: "Beef Stroganoff",
@@ -79,14 +79,14 @@ const init = async () => {
           "Beef, Onion, Mushrooms, Sour cream, Beef broth, Flour, Butter",
         instructions:
           "1. Cook beef and onions. 2. Add mushrooms. 3. Stir in flour and broth. 4. Mix in sour cream.",
-        pictureUrl: "https://example.com/beef-stroganoff.jpg",
+        pictureUrl: "./assets/img/food/b1.jpg",
       },
       {
         title: "Pancakes",
         ingredients: "Flour, Milk, Eggs, Sugar, Baking powder, Butter",
         instructions:
           "1. Mix dry ingredients. 2. Add wet ingredients. 3. Cook on griddle.",
-        pictureUrl: "https://example.com/pancakes.jpg",
+        pictureUrl: "./assets/img/food/s1.jpg",
       },
       {
         title: "Margherita Pizza",
@@ -94,7 +94,7 @@ const init = async () => {
           "Pizza dough, Tomato sauce, Mozzarella cheese, Basil, Olive oil",
         instructions:
           "1. Roll out dough. 2. Add sauce and cheese. 3. Bake and top with basil and olive oil.",
-        pictureUrl: "https://example.com/margherita-pizza.jpg",
+        pictureUrl: "./assets/img/food/p1.jpg",
       },
     ];
 

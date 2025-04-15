@@ -38,9 +38,26 @@ app.get("/about", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "about.html"));
 });
 
+app.get("/recipe", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "recipe.html"));
+});
+
+app.get("/cookbook", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "cookbook.html"));
+});
+
 app.get("/contact", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "contact.html"));
 });
+
+app.get("/culinary", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "culinary.html"));
+});
+
+app.get("/educational", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "educational.html"));
+});
+
 
 app.listen(PORT, async () => {
   console.log(
