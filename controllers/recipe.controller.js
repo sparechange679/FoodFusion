@@ -38,3 +38,31 @@ export const getRecipe = async (req, res, next) => {
     next(error);
   }
 };
+
+// In controllers/recipe.controller.js
+export const getRecipesByIngredient = async (req, res, next) => {
+  try {
+    const { ingredientSlug } = req.params;
+    // Convert slug to ingredient name format (e.g. "parmesan-cheese" → "parmesan cheese")
+    const ingredientName = ingredientSlug.replace(/-/g, ' ').toLowerCase();
+
+    const allRecipes = await Recipe.findAll();
+    
+    // Filter recipes containing the ingredient
+    const filteredRecipes = allRecipes.filter(recipe => {
+      const ingredients = recipe.ingredients
+        .split(',')
+        .map(i => i.trim().toLowerCase());
+      return ingredients.includes(ingredientName);
+    });
+
+    res.status(200).json({
+      success: true,
+      data: {
+        recipes: filteredRecipes
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
