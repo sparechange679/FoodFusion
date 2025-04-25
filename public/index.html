@@ -36,7 +36,7 @@
             <ul>
               <li>
                 <a
-                  class="hvr-underline-from-center"
+                  class="hvr-underline-from-center active"
                   href="http://localhost:8000/"
                   >Home</a
                 >
@@ -65,10 +65,9 @@
                   >Educational</a
                 >
               </li>
-              <li>
+              <li id="button-cart">
                 <a id="shopping-cart" class="shopping-cart">
                   <i class="fa fas fa-sign-in-alt"></i>
-                  <span class="badge">4</span>
                 </a>
                 <div id="cart-content" class="cart-content">
                   <h3 class="text-center" id="form-title">Join Us</h3>
@@ -199,7 +198,7 @@
         </div>
       </div>
       <p class="text-center">
-          <a href="/recipe" class="btn-primary">See All Foods</a>
+        <a href="/recipe" class="btn-primary">See All Foods</a>
       </p>
     </section>
     <!-- Foods Section End -->
@@ -301,7 +300,7 @@
         const password = $("#password");
         const loginBtn = $("#login-btn");
         const signBtn = $("#sign-btn");
-        const shoppingCart = $("#shopping-cart"); // The shopping cart button
+        const shoppingCart = $("#button-cart"); // The shopping cart button
         const cartContent = $("#cart-content");
         const endpoints = {
           signUp: "http://localhost:8000/foodfusion/auth/sign-up",
@@ -401,8 +400,67 @@
         // Reset UI to logged-out state
         function resetUIToLoggedOutState() {
           shoppingCart.html(`
-      <i class="fa fas fa-sign-in-alt"></i>
-      <span class="badge">4</span>
+      <a id="shopping-cart" class="shopping-cart">
+                  <i class="fa fas fa-sign-in-alt"></i>
+                </a>
+                <div id="cart-content" class="cart-content">
+                  <h3 class="text-center" id="form-title">Join Us</h3>
+                  <form action="" class="form-join">
+                    <fieldset>
+                      <!-- value: 1 => login/sign-in, value: 0 => join/sign-up -->
+                      <input
+                        type="hidden"
+                        name="form-value"
+                        id="form-value"
+                        value="0"
+                      />
+
+                      <label class="label" for="firstname" id="firstname-label"
+                        >Firstname</label
+                      >
+                      <input
+                        type="text"
+                        id="firstname"
+                        placeholder="Enter your firstname..."
+                        required
+                      />
+
+                      <label class="label" for="lastname" id="lastname-label"
+                        >Lastname</label
+                      >
+                      <input
+                        type="text"
+                        id="lastname"
+                        placeholder="Enter your lastname..."
+                        required
+                      />
+
+                      <label class="label" for="email">Email</label>
+                      <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email..."
+                        required
+                      />
+
+                      <label class="label" for="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password..."
+                        required
+                      />
+
+                      <input
+                        type="submit"
+                        value="Join Now"
+                        id="login-btn"
+                        class="btn-primary"
+                      />
+                      <a href="#" class="ml-20" id="sign-btn">Sign in</a>
+                    </fieldset>
+                  </form>
+                </div>
     `);
           cartContent.show(); // Show the form again
         }

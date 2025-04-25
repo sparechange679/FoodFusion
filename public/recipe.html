@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FoodFusion | Home</title>
+    <title>FoodFusion | Recipe Collection</title>
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -140,7 +140,9 @@
     <section class="food-search text-center">
       <div class="container">
         <form action="food-search.html">
-          <input type="search" placeholder="Search for food..." required />
+          <label>
+            <input type="search" placeholder="Search for food..." required />
+          </label>
           <input type="submit" value="Search" class="btn-primary" />
         </form>
       </div>
@@ -199,7 +201,7 @@
                 <li>
                   <a href="https://instagram.com/"
                     ><img src="assets/img/logos/instagram-logo.svg"
-                  /></a>
+                   alt="instagram"/></a>
                 </li>
                 <li>
                   <a href="https://x.com/"
@@ -272,7 +274,7 @@
 
         // Toggle between Sign Up and Sign In forms
         signBtn.on("click", function () {
-          if (formValue.val() == 0) {
+          if (formValue.val() === 0) {
             formValue.val("1");
             firstname.fadeOut();
             firstnameLabel.fadeOut();
@@ -297,7 +299,7 @@
         loginBtn.on("click", function (e) {
           e.preventDefault();
 
-          const isSignUp = formValue.val() == "0";
+          const isSignUp = formValue.val() === "0";
           const endpoint = isSignUp ? endpoints.signUp : endpoints.signIn;
 
           // Gather form data
@@ -328,6 +330,7 @@
               cartContent.hide(); // Hide the form after login or registration
             },
             error: function (xhr) {
+              xhr.responseJSON = undefined;
               alert(
                 xhr.responseJSON?.message ||
                   "An error occurred. Please try again."
@@ -346,19 +349,19 @@
         // Update UI for logged-in user
         function updateUIForLoggedInUser(user) {
           shoppingCart.html(`
-      <span>Welcome, ${user.firstname}</span>
-      <button id="logout-btn" class="btn-primary">
-        <i class="fa fas fa-sign-out-alt"></i> Logout
-      </button>
-    `);
+            <span>Welcome, ${user.firstname}</span>
+            <button id="logout-btn" class="btn-primary">
+              <i class="fa fas fa-sign-out-alt"></i> Logout
+            </button>
+          `);
         }
 
         // Reset UI to logged-out state
         function resetUIToLoggedOutState() {
           shoppingCart.html(`
-      <i class="fa fas fa-sign-in-alt"></i>
-      <span class="badge">4</span>
-    `);
+            <i class="fa fas fa-sign-in-alt"></i>
+            <span class="badge">4</span>
+          `);
           cartContent.show(); // Show the form again
         }
       });
@@ -403,27 +406,30 @@
                 );
 
                 const recipeHtml = `
-          <div class="food-menu-box">
-            <form action="">
-              <div class="food-menu-img">
-                <img
-                  src="${recipe.pictureUrl}"
-                  alt="${recipe.title}"
-                  class="img-responsive img-curve"
-                />
-              </div>
-              <div class="food-menu-desc">
-                <h4>${recipe.title}</h4>
-                <p class="food-details">
-                  ${recipe.instructions}
-                </p>
-                ${randomIngredients
-                  .map((ingredient) => `<a href="#">${ingredient}</a>`)
-                  .join(" &nbsp; ")}
-              </div>
-            </form>
-          </div>
-        `;
+                  <div class="food-menu-box">
+                    <form action="">
+                      <div class="food-menu-img">
+                        <img
+                          src="${recipe.pictureUrl}"
+                          alt="${recipe.title}"
+                          class="img-responsive img-curve"
+                        />
+                      </div>
+                      <div class="food-menu-desc">
+                        <h4>${recipe.title}</h4>
+                        <p class="food-details">
+                          ${recipe.instructions}
+                        </p>
+                        ${randomIngredients
+                            .map((ingredient) => `<a href="#">${ingredient}</a>`)
+                            .join(" &nbsp; ")}
+                        <p class="text-center w-2">
+                          <a href="/recipe?rate=${recipe.id}" class="btn-primary">Rate</a>
+                        </p>
+                      </div>
+                    </form>
+                  </div>
+                `;
 
                 recipesContainer.append(recipeHtml);
               });
@@ -431,7 +437,7 @@
               alert("Failed to load recipes. Please try again later.");
             }
           },
-          error: function (xhr) {
+          error: function () {
             alert(
               "An error occurred while fetching the recipes. Please try again later."
             );
