@@ -196,27 +196,27 @@
                 <li>
                   <a href="https://facebook.com/"
                     ><img src="assets/img/logos/facebook-logo.svg"
-                  /></a>
+                   alt="facebook logo"/></a>
                 </li>
                 <li>
                   <a href="https://instagram.com/"
                     ><img src="assets/img/logos/instagram-logo.svg"
-                   alt="instagram"/></a>
+                   alt="instagram logo"/></a>
                 </li>
                 <li>
                   <a href="https://x.com/"
                     ><img src="assets/img/logos/x-logo.svg"
-                  /></a>
+                   alt="x logo"/></a>
                 </li>
                 <li>
                   <a href="https://linkedin.com/"
                     ><img src="assets/img/logos/linkedin-logo.svg"
-                  /></a>
+                   alt="linkedin logo"/></a>
                 </li>
                 <li>
                   <a href="https://youtube.com/"
                     ><img src="assets/img/logos/youtube-logo.svg"
-                  /></a>
+                   alt="youtube logo"/></a>
                 </li>
               </ul>
             </div>
@@ -276,19 +276,19 @@
         signBtn.on("click", function () {
           if (formValue.val() === 0) {
             formValue.val("1");
-            firstname.fadeOut();
-            firstnameLabel.fadeOut();
-            lastname.fadeOut();
-            lastnameLabel.fadeOut();
+            firstname.hide();
+            firstnameLabel.hide();
+            lastname.hide();
+            lastnameLabel.hide();
             formTitle.html("Sign In");
             loginBtn.val("Login");
             signBtn.html("Sign up");
           } else {
             formValue.val("0");
-            firstname.fadeIn();
-            firstnameLabel.fadeIn();
-            lastname.fadeIn();
-            lastnameLabel.fadeIn();
+            firstname.show();
+            firstnameLabel.show();
+            lastname.show();
+            lastnameLabel.show();
             formTitle.html("Join Us");
             loginBtn.val("Join Now");
             signBtn.html("Sign in");
